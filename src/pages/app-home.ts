@@ -1,6 +1,5 @@
 import { LitElement, css, html } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
-import { resolveRouterPath } from '../router';
 
 import '@shoelace-style/shoelace/dist/components/card/card.js';
 import '@shoelace-style/shoelace/dist/components/button/button.js';
@@ -10,9 +9,31 @@ import { styles } from '../styles/shared-styles';
 @customElement('app-home')
 export class AppHome extends LitElement {
 
-  // For more information on using properties and state in lit
-  // check out this link https://lit.dev/docs/components/properties/
-  @property() message = 'Welcome!';
+  @property() phoneNumber = '';
+  @property() selectedDDI = '+1'; //default DDI
+  @property() ddiList = [
+    { country: 'US', code: '+1' },
+    { country: 'Brazil', code: '+55' },
+  ];
+
+  updatePhoneNumber(e: Event) {
+    const target = e.target as HTMLInputElement;
+    this.phoneNumber = target.value;
+  }
+
+  updateSelectedDDI(e: Event) {
+    const target = e.target as HTMLSelectElement;
+    this.selectedDDI = target.value;
+  }
+
+  makeCall() {
+    if (this.phoneNumber) {
+      const fullPhoneNumber = `${this.selectedDDI}${this.phoneNumber}`;
+      window.location.href = `tel:${fullPhoneNumber}`;
+    } else {
+      alert('Please, enter a valid phone number.');
+    }
+  }
 
   static styles = [
     styles,
@@ -22,6 +43,29 @@ export class AppHome extends LitElement {
       justify-content: center;
       align-items: center;
       flex-direction: column;
+    }
+
+
+    #callInput select,
+    #callInput input {
+      padding: 8px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    #callInput button {
+      padding: 8px 16px;
+      font-size: 16px;
+      background-color: #0078d7;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    #callInput button:hover {
+      background-color: #005a9e;
     }
 
     #welcomeCard,
@@ -78,57 +122,25 @@ export class AppHome extends LitElement {
       <main>
         <div id="welcomeBar">
           <sl-card id="welcomeCard">
-            <div slot="header">
-              <h2>${this.message}</h2>
+            <div id="callInput">
+              <select @change=${this.updateSelectedDDI}>
+                ${this.ddiList.map(
+                  (ddi) => html`<option value="${ddi.code}">${ddi.country} (${ddi.code})</option>`
+                )}
+              </select>
+              <input
+                type="tel"
+                id="phoneNumber"
+                placeholder="Enter a Phone Pumber"
+                @input=${this.updatePhoneNumber}>
+              <button @click=${this.makeCall}>Call</button>
             </div>
-
-            <p>
-              For more information on the PWABuilder pwa-starter, check out the
-              <a href="https://docs.pwabuilder.com/#/starter/quick-start">
-                documentation</a>.
-            </p>
-
-            <p id="mainInfo">
-              Welcome to the
-              <a href="https://pwabuilder.com">PWABuilder</a>
-              pwa-starter! Be sure to head back to
-              <a href="https://pwabuilder.com">PWABuilder</a>
-              when you are ready to ship this PWA to the Microsoft Store, Google Play
-              and the Apple App Store!
-            </p>
-
-            ${'share' in navigator
-              ? html`<sl-button slot="footer" variant="default" @click="${this.share}">
-                        <sl-icon slot="prefix" name="share"></sl-icon>
-                        Share this Starter!
-                      </sl-button>`
-              : null}
           </sl-card>
 
           <sl-card id="infoCard">
-            <h2>Technology Used</h2>
 
-            <ul>
-              <li>
-                <a href="https://www.typescriptlang.org/">TypeScript</a>
-              </li>
-
-              <li>
-                <a href="https://lit.dev">lit</a>
-              </li>
-
-              <li>
-                <a href="https://shoelace.style/">Shoelace</a>
-              </li>
-
-              <li>
-                <a href="https://github.com/thepassle/app-tools/blob/master/router/README.md"
-                  >App Tools Router</a>
-              </li>
-            </ul>
           </sl-card>
 
-          <sl-button href="${resolveRouterPath('about')}" variant="primary">Navigate to About</sl-button>
         </div>
       </main>
     `;

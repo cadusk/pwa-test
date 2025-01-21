@@ -11,6 +11,10 @@ export default defineConfig({
     cssMinify: true,
     lib: false
   },
+  server: {
+    host: '0.0.0.0',
+    port: 5173,
+  },
   plugins: [
     VitePWA({
       strategies: "injectManifest",
