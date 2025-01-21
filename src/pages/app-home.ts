@@ -17,11 +17,28 @@ export class AppHome extends LitElement {
   }
 
   makeCall() {
-    if (this.phoneNumber) {
-      window.location.href = `tel:${this.phoneNumber}`;
-    } else {
-      alert('Please, enter a valid phone number.');
+    if (!this.phoneNumber) {
+      alert('Phone number shouldn\'t be empty.');
+      return;
     }
+
+    window.location.href = `tel:${this.phoneNumber}`;
+  }
+
+  @property() scheduleNotificationTimeout = 0;
+
+  updateScheduleNotificationTimeout(e: Event) {
+    const target = e.target as HTMLInputElement;
+    this.scheduleNotificationTimeout = Number(target.value);
+  }
+
+  scheduleNotification() {
+    if (this.scheduleNotificationTimeout <= 0) {
+      alert('Schedule notification timeout must be a number.');
+      return;
+    }
+
+    alert('Notification scheduled!');
   }
 
   static styles = [
@@ -32,6 +49,35 @@ export class AppHome extends LitElement {
       justify-content: center;
       align-items: center;
       flex-direction: column;
+    }
+
+    #notificationScheduler {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-top: 16px;
+    }
+
+    #notificationScheduler input {
+      flex: 1;
+      padding: 8px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    #notificationScheduler button {
+      padding: 8px 16px;
+      font-size: 16px;
+      background-color: #0078d7;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    #notificationScheduler button:hover {
+      background-color: #005a9e;
     }
 
     #callInput {
@@ -128,8 +174,21 @@ export class AppHome extends LitElement {
               </div>
           </sl-card>
 
+          <br/>
+
           <sl-card id="pushNotificationCard">
-            <h2>Send Push Notifications</h2>
+            <h2>Schedule Push Notifications</h2>
+            <p>Enter the number of seconds you would like to wait until the application triggers a new notification.</p>
+            <p>The goal is to be able to test if the app is able to send notification at the OS level, integrating as a native app would do.</p>
+
+            <div id="notificationScheduler">
+                <input
+                  type="number"
+                  id="notificationTime"
+                  placeholder="Seconds to wait - ex: 5"
+                  @input=${this.updateScheduleNotificationTimeout}>
+                <button @click=${this.scheduleNotification}>Schedule</button>
+              </div>
           </sl-card>
 
         </div>
