@@ -114,20 +114,24 @@ export class AppHome extends LitElement {
 
       <main>
         <div id="welcomeBar">
-          <sl-card id="welcomeCard">
+          <sl-card id="makeCallsCard">
+            <h2>Make a call</h2>
+            <p>To make a call, type in the phone number and click 'Call'.</p>
+            <p>This will redirect a tel: link and should open the default calling app on your device.</p>
             <div id="callInput">
                 <input
                   type="tel"
                   id="phoneNumber"
-                  placeholder="Phone Number"
+                  placeholder="Phone Number - ex. +1 555-123-4567"
                   @input=${this.updatePhoneNumber}>
                 <button @click=${this.makeCall}>Call</button>
               </div>
           </sl-card>
 
-          <sl-card id="infoCard">
-
+          <sl-card id="pushNotificationCard">
+            <h2>Send Push Notifications</h2>
           </sl-card>
+
         </div>
       </main>
     `;
