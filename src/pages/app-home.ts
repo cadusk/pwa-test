@@ -10,26 +10,15 @@ import { styles } from '../styles/shared-styles';
 export class AppHome extends LitElement {
 
   @property() phoneNumber = '';
-  @property() selectedDDI = '+1'; //default DDI
-  @property() ddiList = [
-    { country: 'US', code: '+1' },
-    { country: 'Brazil', code: '+55' },
-  ];
 
   updatePhoneNumber(e: Event) {
     const target = e.target as HTMLInputElement;
     this.phoneNumber = target.value;
   }
 
-  updateSelectedDDI(e: Event) {
-    const target = e.target as HTMLSelectElement;
-    this.selectedDDI = target.value;
-  }
-
   makeCall() {
     if (this.phoneNumber) {
-      const fullPhoneNumber = `${this.selectedDDI}${this.phoneNumber}`;
-      window.location.href = `tel:${fullPhoneNumber}`;
+      window.location.href = `tel:${this.phoneNumber}`;
     } else {
       alert('Please, enter a valid phone number.');
     }
@@ -45,9 +34,15 @@ export class AppHome extends LitElement {
       flex-direction: column;
     }
 
+    #callInput {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-top: 16px;
+    }
 
-    #callInput select,
     #callInput input {
+      flex: 1;
       padding: 8px;
       font-size: 16px;
       border: 1px solid #ccc;
@@ -100,8 +95,6 @@ export class AppHome extends LitElement {
   `];
 
   async firstUpdated() {
-    // this method is a lifecycle even in lit
-    // for more info check out the lit docs https://lit.dev/docs/components/lifecycle/
     console.log('This is your home page');
   }
 
@@ -123,24 +116,18 @@ export class AppHome extends LitElement {
         <div id="welcomeBar">
           <sl-card id="welcomeCard">
             <div id="callInput">
-              <select @change=${this.updateSelectedDDI}>
-                ${this.ddiList.map(
-                  (ddi) => html`<option value="${ddi.code}">${ddi.country} (${ddi.code})</option>`
-                )}
-              </select>
-              <input
-                type="tel"
-                id="phoneNumber"
-                placeholder="Enter a Phone Pumber"
-                @input=${this.updatePhoneNumber}>
-              <button @click=${this.makeCall}>Call</button>
-            </div>
+                <input
+                  type="tel"
+                  id="phoneNumber"
+                  placeholder="Phone Number"
+                  @input=${this.updatePhoneNumber}>
+                <button @click=${this.makeCall}>Call</button>
+              </div>
           </sl-card>
 
           <sl-card id="infoCard">
 
           </sl-card>
-
         </div>
       </main>
     `;
