@@ -94,7 +94,6 @@ export class AppHome extends LitElement {
       return;
     }
 
-    alert('Notification scheduled!');
     await this.requestNotificationPermission();
     const payload = {
       title: 'Push notification',
