@@ -59,7 +59,7 @@ export class AppHome extends LitElement {
             applicationServerKey: 'BN9seiGCuLY_kUI1bmgQa-YzQUe4-nGTC_mK6GAz2NrmVwWOySH3dwZsJkD2dWmZC8AA6hxyI7A9SHqcZAZa6oM'
         });
       }
-      const response = await fetch('http://localhost:3000/subscribe', {
+      const response = await fetch('https://pushnotificationpi.azurewebsites.net/pushnotification/subscribe', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -103,7 +103,7 @@ export class AppHome extends LitElement {
     };
 
     await fetch(
-      'http://localhost:3000/send-notification',
+      'https://pushnotificationpi.azurewebsites.net/pushnotification/send-notification',
       {
         method: 'POST',
         headers: {

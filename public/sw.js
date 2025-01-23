@@ -67,4 +67,7 @@ const updateName = async (event) => {
     await self.widgets.updateByInstanceId(event.instanceId, payload);
 }
 
-workbox.precaching.precacheAndRoute(self.__WB_MANIFEST || []);
+const precacheManifest = self.__WB_MANIFEST.filter((entry) => {
+    return entry.url !== 'staticwebapp.config.json';
+  });
+  workbox.precaching.precacheAndRoute(precacheManifest);
