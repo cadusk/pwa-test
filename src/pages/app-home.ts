@@ -95,9 +95,12 @@ export class AppHome extends LitElement {
     }
 
     await this.requestNotificationPermission();
+    const currentTime = new Date();
+    const formattedTime = currentTime.toLocaleTimeString(); // Formata a hora atual
+
     const payload = {
       title: 'Push notification',
-      body: 'This is a push notification!',
+      body: `This is a push notification! Current time: ${formattedTime}`,
       scheduleNotificationTimeout: this.scheduleNotificationTimeout
     };
 
