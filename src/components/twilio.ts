@@ -1,4 +1,4 @@
-import { Device } from "@twilio/voice-sdk/esm";
+import { Device } from '@twilio/voice-sdk';
 
 export class Twilio{
     token: string;
