@@ -1,5 +1,6 @@
 import { LitElement, css, html } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
+import { Twilio } from '../components/twilio';
 
 import '@shoelace-style/shoelace/dist/components/card/card.js';
 import '@shoelace-style/shoelace/dist/components/button/button.js';
@@ -10,6 +11,9 @@ export class AppHome extends LitElement {
 
   @property() phoneNumber = '';
   @property() notificationTime = 0;
+  @property() token = '';
+  @property() twilio = new Twilio(this.token);
+
 
   updatePhoneNumber(e: Event) {
     const target = e.target as HTMLInputElement;
@@ -26,8 +30,12 @@ export class AppHome extends LitElement {
       alert('Phone number shouldn\'t be empty.');
       return;
     }
+    this.twilio.makeCall(this.phoneNumber);
+    //window.location.href = `tel:${this.phoneNumber}`;
+  }
 
-    window.location.href = `tel:${this.phoneNumber}`;
+  hangUp(){
+    this.twilio.hangUp();
   }
 
   @property() scheduleNotificationTimeout = 0;
@@ -259,9 +267,9 @@ export class AppHome extends LitElement {
       <main>
         <div id="welcomeBar">
           <sl-card id="makeCallsCard">
-            <h2>Make a call</h2>
+            <h2>Make a call using Twilio</h2>
             <p>To make a call, type in the phone number and click 'Call'.</p>
-            <p>This will redirect a tel: link and should open the default calling app on your device.</p>
+            <p>This will access a Twilio Account and make a call</p>
             <div id="callInput">
                 <input
                   type="tel"
@@ -269,6 +277,7 @@ export class AppHome extends LitElement {
                   placeholder="Phone Number - ex. +1 555-123-4567"
                   @input=${this.updatePhoneNumber}>
                 <button @click=${this.makeCall}>Call</button>
+                <button @click=${this.hangUp}>End Call</button>
               </div>
           </sl-card>
 
