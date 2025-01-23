@@ -18,15 +18,13 @@ let pushSubscriptions = new Map();
 // VAPID keys (replace with your actual keys)
 webPush.setVapidDetails(
   'mailto:gabriel.guerrera@programmersinc.com',
-  //'pwa-test',
-  'BBO_LaqAURJ5gH18XZG_jeFSZXOC_c5PpbzhFBCdD_20ARng2vZqB4qU0jSx-VgzYkS4_fTwnapjdDRa1FQECc4',
-  '2JM_OHakmBOHY_wHHXDVNjLSsn4PGtQnbJdfVxAsSGw'
+  'BN9seiGCuLY_kUI1bmgQa-YzQUe4-nGTC_mK6GAz2NrmVwWOySH3dwZsJkD2dWmZC8AA6hxyI7A9SHqcZAZa6oM',
+  'JkrazHU5DDtwbrjQ8Rp-CXDd6271PfqzQNM0x-obWOA'
 );
 
 // Save subscription endpoint
 app.post('/subscribe', (req, res) => {
   const subscription = req.body;
-  // subscriptions.push(subscription);
   pushSubscriptions.set(subscription.endpoint, subscription);
   console.log('Subscription received:', subscription);
   res.status(200).json({});
@@ -38,54 +36,11 @@ app.post('/unsubscribe', (req, res) => {
   res.status(200).json({});
 });
 
-// // Send push notification
-// app.post('/send-notification', (req, res) => {
-//   const payload = req.body.payload; // Payload sent from the client
-//   console.log('payload', payload)
-//   console.log('subscription', subscriptions);
-//   subscriptions.forEach((subscription) => {
-//     webPush.sendNotification(subscription, payload)
-//     .then(() => console.log('Notification sent successfully to:', subscription.endpoint))
-//     .catch((error) => console.error('Error sending notification:', error));
-//   });
-//   res.status(200).json({ message: 'Notifications sent.' });
-// });
-
 app.post('/send-notification', (req, res) => {
   const payload = req.body.payload;
   const  {scheduleNotificationTimeout}  = JSON.parse(payload);
-  console.log('Payload:', payload);
-  console.log('scheduleNotificationTimeout:', scheduleNotificationTimeout);
-
-  // Get the last subscription from the array
-  const lastSubscription = subscriptions[subscriptions.length - 1];
-  console.log('last subscription', lastSubscription);
-
-  // webPush.sendNotification(lastSubscription, payload)
-  //   .then(() => {
-  //     res.status(200).json({ message: 'Notification sent successfully.' });
-  //   })
-  //   .catch((error) => {
-  //     console.error('Error sending notification:', error);
-  //     res.status(500).json({ message: 'Error sending notification.', error });
-  //   });
-
-  const delay = 5000;
-  console.log('API: scheduleNotificationTimeout', scheduleNotificationTimeout)
   if (scheduleNotificationTimeout > 0) {
     setTimeout(() => {
-      // webPush
-      //   .sendNotification(lastSubscription, payload)
-      //   .then(() => {
-      //     res.status(200).json({ message: 'Notification sent successfully.' });
-      //   })
-      //   .catch((error) => {
-      //     console.error('Error sending notification:', error);
-      //     res
-      //       .status(500)
-      //       .json({ message: 'Error sending notification.', error });
-      //   });
-
       pushSubscriptions.forEach(subscription => {
           console.log(`Sending notification`);
           webPush.sendNotification(subscription, payload).then(response => {
@@ -100,11 +55,6 @@ app.post('/send-notification', (req, res) => {
     });
     }, scheduleNotificationTimeout * 1000);
   }
-});
-
-// Serve index.html for all routes (SPA support)
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Start the server

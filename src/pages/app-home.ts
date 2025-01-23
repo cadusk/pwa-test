@@ -37,70 +37,6 @@ export class AppHome extends LitElement {
     this.scheduleNotificationTimeout = Number(target.value);
   }
 
-  // async subscribeUser() {
-  //   if (!('serviceWorker' in navigator)) {
-  //     console.error('Service workers are not supported by this browser.');
-  //     return;
-  //   }
-  //   const registration = await navigator.serviceWorker.ready;
-  //   try {
-  //     const subscription = await registration.pushManager.subscribe({
-  //       userVisibleOnly: true,
-  //       applicationServerKey: 'BBO_LaqAURJ5gH18XZG_jeFSZXOC_c5PpbzhFBCdD_20ARng2vZqB4qU0jSx-VgzYkS4_fTwnapjdDRa1FQECc4', // Replace with your VAPID public key
-  //     });
-  //     console.log('subscribing user', subscription)
-  //     const response = await fetch('http://localhost:3000/subscribe', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(subscription),
-  //     });
-
-  //     if (response.ok) {
-  //       console.log('Subscription sent to backend successfully.');
-  //     } else {
-  //       console.error('Failed to send subscription to backend.');
-  //     }
-  //   } catch (error) {
-  //     console.error('Failed to subscribe the user:', error);
-  //   }
-  // }
-
-  // async subscribeUser() {
-  //     try {
-  //       if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
-  //           console.log('Push notifications not supported');
-  //           return;
-  //       }
-
-  //       const registration = await navigator.serviceWorker.ready;
-  //       // const response = await fetch('/api/vapidPublicKey');
-  //       // const { publicKey } = await response.json();
-
-  //       let subscription = await registration.pushManager.getSubscription();
-
-  //       if (!subscription) {
-  //           subscription = await registration.pushManager.subscribe({
-  //               userVisibleOnly: true,
-  //               applicationServerKey: this.urlBase64ToUint8Array('BBO_LaqAURJ5gH18XZG_jeFSZXOC_c5PpbzhFBCdD_20ARng2vZqB4qU0jSx-VgzYkS4_fTwnapjdDRa1FQECc4',
-  //               )
-  //           });
-
-  //           // Send subscription to server
-  //           await fetch('/api/subscribe', {
-  //               method: 'POST',
-  //               headers: {
-  //                   'Content-Type': 'application/json',
-  //               },
-  //               body: JSON.stringify(subscription)
-  //           });
-  //       }
-  //   } catch (error) {
-  //       console.error('Error setting up push notifications:', error);
-  //   }
-  // }
-
   async subscribeUser() {
     if (!('serviceWorker' in navigator)) {
       console.error('Service workers are not supported by this browser.');
@@ -108,20 +44,13 @@ export class AppHome extends LitElement {
     }
     const registration = await navigator.serviceWorker.ready;
     try {
-      // const subscription = await registration.pushManager.subscribe({
-      //   userVisibleOnly: true,
-      //   applicationServerKey: 'BBO_LaqAURJ5gH18XZG_jeFSZXOC_c5PpbzhFBCdD_20ARng2vZqB4qU0jSx-VgzYkS4_fTwnapjdDRa1FQECc4', // Replace with your VAPID public key
-      // });
-
       let subscription = await registration.pushManager.getSubscription();
       if (!subscription) {
         subscription = await registration.pushManager.subscribe({
             userVisibleOnly: true,
-            applicationServerKey: this.urlBase64ToUint8Array('')
+            applicationServerKey: 'BN9seiGCuLY_kUI1bmgQa-YzQUe4-nGTC_mK6GAz2NrmVwWOySH3dwZsJkD2dWmZC8AA6hxyI7A9SHqcZAZa6oM'
         });
-
       }
-
       const response = await fetch('http://localhost:3000/subscribe', {
         method: 'POST',
         headers: {
@@ -139,22 +68,6 @@ export class AppHome extends LitElement {
       console.error('Failed to subscribe the user:', error);
     }
   }
-
-      // Utility function to convert VAPID key
-    urlBase64ToUint8Array(base64String) {
-      const padding = '='.repeat((4 - base64String.length % 4) % 4);
-      const base64 = (base64String + padding)
-          .replace(/\-/g, '+')
-          .replace(/_/g, '/');
-
-      const rawData = window.atob(base64);
-      const outputArray = new Uint8Array(rawData.length);
-
-      for (let i = 0; i < rawData.length; ++i) {
-          outputArray[i] = rawData.charCodeAt(i);
-      }
-      return outputArray;
-    }
 
   async requestNotificationPermission(){
     const permission = await Notification.requestPermission();
@@ -181,8 +94,6 @@ export class AppHome extends LitElement {
       scheduleNotificationTimeout: this.scheduleNotificationTimeout
     };
 
-    // await this.waitSeconds(this.scheduleNotificationTimeout)
-
     await fetch(
       'http://localhost:3000/send-notification',
       {
@@ -198,7 +109,6 @@ export class AppHome extends LitElement {
   waitSeconds(seconds = 0) {
     return new Promise((resolve) => setTimeout(resolve, seconds * 1000));
   }
-
 
   static styles = [
     styles,
