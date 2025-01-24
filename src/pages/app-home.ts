@@ -234,6 +234,15 @@ export class AppHome extends LitElement {
       }
     }
 
+    #logoContainer {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    #appLogo {
+      max-width: 150px;
+      height: auto;
+    }
 
     @media (horizontal-viewport-segments: 2) {
       #welcomeBar {
@@ -267,6 +276,9 @@ export class AppHome extends LitElement {
       <app-header></app-header>
 
       <main>
+        <div id="logoContainer">
+          <img src="/assets/icons/logo.png" alt="Logo" id="appLogo">
+        </div>
         <div id="welcomeBar">
           <sl-card id="makeCallsCard">
             <h2>Make a call using Twilio</h2>
