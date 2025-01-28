@@ -116,3 +116,25 @@ Projeto
 ## License
 
 This project is licensed under the MIT License. See the LICENSE.txt file for more details.
+
+## Features
+
+### Notification
+
+This app includes an implementation of Push Notifications. In order to work, it requires both a service worker and an API.
+
+<b>Service Worker</b>: Required to make the notifications works when the app is closed
+
+<b>API</b>: Send the notification using the web-push package
+
+#### Steps
+
+1. Grant Permission: When you click the Schedule button, the app will request notification permissions. If permissions are already granted, this step is skipped.
+
+2. Subscribe the Service Worker: Once permission is granted, the service worker is subscribed. This step is required to enable push notifications and ensure offline functionality.
+
+3. Send Notification: After subscribing, the app triggers a request to the API. The API waits for the number of seconds specified by the user, then sends the notification.
+
+#### How to test
+
+To test it, simply set the delay time (in seconds) and click the Schedule button to see how the process works.
