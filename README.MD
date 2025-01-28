@@ -3,7 +3,7 @@
 Este repositório contém um projeto que é dividido em duas partes principais: `API` e `PWA`. Abaixo está a estrutura detalhada do projeto.
 
 ## Estrutura do Projeto
-
+```
 Projeto
 ├── .gitignore
 ├── API/
@@ -52,7 +52,7 @@ Projeto
 │   │   ├── swa-cli.config.json
 │   │   ├── tsconfig.json
 │   │   └── vite.config.ts
-
+```
 
 ## Descrição dos Diretórios e Arquivos
 
