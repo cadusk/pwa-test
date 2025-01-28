@@ -1,8 +1,8 @@
-# Estrutura do Projeto
+# Project Structure
 
-Este repositório contém um projeto que é dividido em duas partes principais: `API` e `PWA`. Abaixo está a estrutura detalhada do projeto.
+This repository contains a project divided into two main parts: API and PWA. Below is the detailed project structure.
 
-## Estrutura do Projeto
+## Project Structure
 ```
 Projeto
 ├── .gitignore
@@ -54,65 +54,65 @@ Projeto
 │   │   └── vite.config.ts
 ```
 
-## Descrição dos Diretórios e Arquivos
+## Directory and File Descriptions
 
 ### API/
-- **app.js**: Configuração principal do servidor Express.
-- **bin/www**: Script para iniciar o servidor.
-- **package.json**: Dependências e scripts do projeto.
-- **public/stylesheets/style.css**: Estilos CSS públicos.
-- **routes/**: Rotas da aplicação.
-  - **index.js**: Rota principal.
-  - **pushnotification.js**: Rota para notificações push.
-  - **users.js**: Rota para usuários.
-- **views/**: Templates EJS.
-  - **error.ejs**: Template de erro.
-  - **index.ejs**: Template da página inicial.
+- **`app.js`**: Main configuration for the Express server.
+- **`bin/www`**: Script to start the server.
+- **`package.json`**: Project dependencies and scripts.
+- **`public/stylesheets/style.css`**: Public CSS styles.
+- **`routes/`**: Application routes.
+  - **`index.js`**: Main route.
+  - **`pushnotification.js`**: Route for push notifications.
+  - **`users.js`**: Route for user management.
+- **`views/`**: EJS templates.
+  - **`error.ejs`**: Error template.
+  - **`index.ejs`**: Home page template.
 
 ### PWA/
-- **.env**: Variáveis de ambiente.
-- **index.html**: Página principal do PWA.
-- **LICENSE.txt**: Licença do projeto.
-- **package.json**: Dependências e scripts do projeto.
-- **public/**: Arquivos públicos.
-  - **assets/**: Recursos estáticos.
-  - **manifest.json**: Manifesto do PWA.
-  - **staticwebapp.config.json**: Configuração do aplicativo web estático.
-  - **sw.js**: Service Worker.
-  - **widget/**: Arquivos de configuração do widget.
-    - **ac.json**: Configuração do Adaptive Card.
-    - **data.json**: Dados do widget.
-- **README.md**: Documentação do projeto.
-- **src/**: Código-fonte do PWA.
-  - **app-index.ts**: Componente principal do aplicativo.
-  - **components/**: Componentes reutilizáveis.
-    - **header.ts**: Componente de cabeçalho.
-    - **twilio.ts**: Integração com Twilio.
-  - **pages/**: Páginas do aplicativo.
-    - **app-about/**: Página "Sobre".
-      - **about-styles.ts**: Estilos da página "Sobre".
-      - **app-about.ts**: Componente da página "Sobre".
-    - **app-home.ts**: Página inicial.
-  - **router.ts**: Configuração do roteador.
-  - **styles/**: Estilos globais e compartilhados.
-    - **global.css**: Estilos globais.
-    - **shared-styles.ts**: Estilos compartilhados.
-- **swa-cli.config.json**: Configuração do Azure Static Web Apps CLI.
-- **tsconfig.json**: Configuração do TypeScript.
-- **vite.config.ts**: Configuração do Vite.
+- **`.env`**: Environment variables.
+- **`index.html`**: Main page of the PWA.
+- **`LICENSE.txt`**: Project license.
+- **`package.json`**: Project dependencies and scripts.
+- **`public/`**: Public files.
+  - **`assets/`**: Static resources.
+  - **`manifest.json`**: PWA manifest.
+  - **`staticwebapp.config.json`**: Static web app configuration.
+- **`sw.js`**: Service Worker.
+- **`widget/`**: Widget configuration files.
+  - **`ac.json`**: Adaptive Card configuration.
+  - **`data.json`**: Widget data.
+- **`README.md`**: Project documentation.
+- **`src/`**: PWA source code.
+  - **`app-index.ts`**: Main app component.
+  - **`components/`**: Reusable components.
+    - **`header.ts`**: Header component.
+    - **`twilio.ts`**: Twilio integration.
+  - **`pages/`**: Application pages.
+    - **`app-about/`**: "About" page.
+      - **`about-styles.ts`**: Styles for the "About" page.
+      - **`app-about.ts`**: "About" page component.
+    - **`app-home.ts`**: Home page.
+  - **`router.ts`**: Router configuration.
+  - **`styles/`**: Global and shared styles.
+    - **`global.css`**: Global styles.
+    - **`shared-styles.ts`**: Shared styles.
+  - **`swa-cli.config.json`**: Azure Static Web Apps CLI configuration.
+  - **`tsconfig.json`**: TypeScript configuration.
+  - **`vite.config.ts`**: Vite configuration.
 
-## Como Executar
+## How to Run
 
 ### API
 1. Navegue até o diretório `API`.
 2. Instale as dependências: `npm install`.
-3. Inicie o servidor: `npm start`.
+3. Start the server: `npm start`.
 
 ### PWA
-1. Navegue até o diretório `PWA`.
-2. Instale as dependências: `npm install`.
-3. Inicie o servidor de desenvolvimento: `npm run dev`.
+1. Navigate to the PWA directory. `PWA`.
+2. Install dependencies: `npm install`.
+3. Start the dev server: `npm run dev`.
 
-## Licença
+## License
 
-Este projeto está licenciado sob a licença MIT. Veja o arquivo [LICENSE.txt](PWA/LICENSE.txt) para mais detalhes.
+This project is licensed under the MIT License. See the LICENSE.txt file for more details.
