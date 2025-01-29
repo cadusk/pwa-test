@@ -104,8 +104,8 @@ Projeto
 ## How to Run
 
 ### API
-1. Navegue até o diretório `API`.
-2. Instale as dependências: `npm install`.
+1. Navigate to the API directory `API`.
+2. Install dependencies: `npm install`.
 3. Start the server: `npm start`.
 
 ### PWA
@@ -113,9 +113,28 @@ Projeto
 2. Install dependencies: `npm install`.
 3. Start the dev server: `npm run dev`.
 
-## License
+## Twilio Setup
 
-This project is licensed under the MIT License. See the LICENSE.txt file for more details.
+### Overview
+
+This project uses Twilio's JavaScript SDK to make and end phone calls. A <b>valid token</b> is required and must be set in the `token` property in `src\pages\app-home.ts` (line 14).
+
+To generate the token, a simple API needs to be created, which can be implemented in some languages like Node.js. This API requires the <b>Account SID, API Key, API Secret</b> and <b>TwiML App SID</b> to generate the token. An full code example can be found on Twilio's documentation: [Create an Access Token for Voice](https://www.twilio.com/docs/iam/access-tokens#create-an-access-token-for-voice)
+
+### Setup
+
+- The Twilio object is created in `app-home.ts` (line 15) and calls its methods.
+- Its implementation is in `src\pages\twilio.ts`.
+- The SDK's `Device` manages audio input/output.
+
+### Methods
+
+- **`makeCall(phoneNumber: string)`**
+  - Calls the given phone number.
+  - The number is passed as the To parameter in the Twilio request, used by TwiML Bin.
+
+- **`hangUp()`**
+  - Ends the current call if active.
 
 ## Features
 
@@ -138,3 +157,7 @@ This app includes an implementation of Push Notifications. In order to work, it 
 #### How to test
 
 To test it, simply set the delay time (in seconds) and click the Schedule button to see how the process works.
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE.txt file for more details.
