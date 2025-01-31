@@ -117,9 +117,11 @@ Projeto
 
 ### Overview
 
-This project uses Twilio's JavaScript SDK to make and end phone calls. A <b>valid token</b> is required and must be set in the `token` property in `src\pages\app-home.ts` (line 14).
+This project uses Twilio's JavaScript SDK and a Node API to make phone calls.
 
-To generate the token, a simple API needs to be created, which can be implemented in some languages like Node.js. This API requires the <b>Account SID, API Key, API Secret</b> and <b>TwiML App SID</b> to generate the token. An full code example can be found on Twilio's documentation: [Create an Access Token for Voice](https://www.twilio.com/docs/iam/access-tokens#create-an-access-token-for-voice)
+The API is responsible to generate an Access Token, that will redirect the call tho the TwiML App.
+
+When the user type a phone number and click "Call" button, the app will call the Api to generate a Token and use the Token created and make a call to the TwiML App in the Twilio Account. The TwiML App will use a TwiML Bin to tell a message saying the app is just a demo of a PWA app and then will call to the number the user typed in the text box before clicking the "Call" button. The call will happen through the browser or app, using the default device microphone.
 
 ### Setup
 

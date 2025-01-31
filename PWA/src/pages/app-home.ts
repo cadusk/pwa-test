@@ -11,8 +11,7 @@ export class AppHome extends LitElement {
 
   @property() phoneNumber = '';
   @property() notificationTime = 0;
-  @property() token = '';
-  @property() twilio = new Twilio(this.token);
+  @property() twilio: Twilio = new Twilio('');
 
 
   updatePhoneNumber(e: Event) {
@@ -31,7 +30,6 @@ export class AppHome extends LitElement {
       return;
     }
     this.twilio.makeCall(this.phoneNumber);
-    //window.location.href = `tel:${this.phoneNumber}`;
   }
 
   hangUp(){
@@ -43,6 +41,20 @@ export class AppHome extends LitElement {
   updateScheduleNotificationTimeout(e: Event) {
     const target = e.target as HTMLInputElement;
     this.scheduleNotificationTimeout = Number(target.value);
+  }
+
+  async getTwilioToken():Promise<Twilio>{
+    try{
+      const response = await fetch('https://pushnotificationpi.azurewebsites.net/twilio/token');
+      const data = await response.json();
+      const token = data.token;
+      const twilio = new Twilio(token);
+      console.log('Twilio ready!');
+      return twilio;
+    } catch(error){
+      console.error('Failed to get Twilio token:', error);
+      return new Twilio('');
+    }
   }
 
   async subscribeUser() {
@@ -259,6 +271,7 @@ export class AppHome extends LitElement {
 
   async firstUpdated() {
     console.log('This is your home page');
+    this.twilio = await this.getTwilioToken();
   }
 
   share() {
